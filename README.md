@@ -69,7 +69,7 @@ The folder structured as:
 * `/simulation/SNIA_traces`: scripts containing how we generate multi-cloud traces
 * `/simulation/benchmark`: scripts on benchmarking real object stores
 * `/simulation/config`: various policy config
-* `/simulation/src`: poilcy implementation
+* `/simulation/src`: poilcy implementation - our policy is named `tevict_new` and `tevict_ranges_new` 
 
 ### Usage 
 ```
