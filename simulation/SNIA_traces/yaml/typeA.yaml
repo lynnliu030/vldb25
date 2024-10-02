@@ -1,0 +1,16 @@
+# Time option:
+# Format:  mili/ seconds/ minutes/ hours/ days
+# example: 3 days + 1 hour + 5 minutes + 36 seconds + 3 milli
+# The time of each part is (timestamp >= START_TIME and timestamp < END_TIME)
+# Size option:  
+# KB/ MB/ GB
+
+REGIONS_WRITE: ["aws:us-east-1", "aws:us-west-2", "aws:eu-west-1"]
+REGIONS_WRITE_PROB: [1, 1, 1]
+REGIONS_READ: ["aws:us-east-1","aws:us-west-2", "aws:eu-west-1" ]
+REGIONS_READ_PROB: [1, 1, 1]
+TYPE: "typeA" # Random Puts and Gets 
+
+START_TIME: 0 days 
+END_TIME: 7 days
+

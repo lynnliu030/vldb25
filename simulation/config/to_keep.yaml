@@ -1,0 +1,3 @@
+placement_policy: "to_keep"
+transfer_policy: "cheapest"
+window_size: 24 

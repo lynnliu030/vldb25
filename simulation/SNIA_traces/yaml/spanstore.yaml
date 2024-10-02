@@ -1,0 +1,9 @@
+EPOCH_1:
+    LABEL: GETS_LOOP
+    START_TIME: 0 milli
+    END_TIME: 30 days 
+    START_OBJ_KEY: 0
+    AGGREGATE: 0.1TB     
+    SIZE: 100KB
+    GET_PUT_RATIO: 1 
+    GET_OPS: 100M  

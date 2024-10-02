@@ -1,0 +1,5 @@
+POSSIBLE_REGIONS: ['aws:us-east-1', 'aws:us-west-2', 'azure:eastus', 'azure:westeurope', 'gcp:us-west1-a', 'gcp:us-east1-b']
+TYPE: "typeA" # Random Puts and Gets 
+
+START_TIME: 0 days 
+END_TIME: 7 days

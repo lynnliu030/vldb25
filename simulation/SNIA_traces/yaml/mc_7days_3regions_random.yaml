@@ -1,0 +1,30 @@
+# Time option:
+# Format:  mili/ seconds/ minutes/ hours/ days
+# example: 3 days + 1 hour + 5 minutes + 36 seconds + 3 milli
+# The time of each part is (timestamp >= START_TIME and timestamp < END_TIME)
+# Size option:  
+# KB/ MB/ GB
+
+
+INIT_STATE:
+    LABEL: "init_state"
+    PUT:
+       aws:me-south-1: 33.3%
+       aws:eu-south-1: 33.3%
+       aws:us-east-1: 33.3%
+
+EPOCH_1:
+    LABEL: "first part"
+    START_TIME: 0 days 
+    END_TIME: 7 days
+    POLICY_OBJ_1:
+        LABEL: "policy 1" 
+        OBJ%:  25%        
+        GET: 
+          aws:me-south-1: 33.3%
+          aws:eu-south-1: 33.3%
+          aws:us-east-1: 33.3%
+        PUT:
+          aws:me-south-1: 33.3%
+          aws:eu-south-1: 33.3%
+          aws:us-east-1: 33.3%

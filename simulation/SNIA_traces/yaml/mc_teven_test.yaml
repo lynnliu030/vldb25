@@ -1,0 +1,22 @@
+INIT_STATE:
+    LABEL: "init_state"
+    PUT:
+        aws:us-west-1: 100%
+
+EPOCH_1:
+    LABEL: "first part"
+    START_TIME: 0 days 
+    END_TIME: 240 days
+    POLICY_OBJ_1:
+        LABEL: "policy 1" 
+        OBJ%:  100%        
+        GET: 
+          aws:us-east-1: 100%
+        PUT:
+          aws:us-west-1: 100%
+        HEAD: 
+          N/A: 100%
+        DELETE:
+          N/A: 100%
+        COPY:  
+          N/A: 100%

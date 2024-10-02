@@ -1,0 +1,2 @@
+placement_policy: "optimal"
+transfer_policy: "cheapest"

@@ -1,0 +1,2 @@
+placement_policy: "pull_on_read"
+transfer_policy: "cheapest"

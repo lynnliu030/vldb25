@@ -1,0 +1,5 @@
+src,dest,cost
+aws:us-east-1,aws:us-west-1,0.056
+aws:us-west-1,aws:us-east-1,0.056
+aws:us-east-1,aws:us-west-2,0.056
+aws:us-west-2,aws:us-east-1,0.056

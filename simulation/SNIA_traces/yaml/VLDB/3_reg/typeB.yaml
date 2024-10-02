@@ -1,0 +1,5 @@
+POSSIBLE_REGIONS: ['aws:us-east-1', 'azure:westeurope', 'gcp:us-west1-a']
+TYPE: "typeB" # Random Puts and Gets 
+
+START_TIME: 0 days 
+END_TIME: 7 days

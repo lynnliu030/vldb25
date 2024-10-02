@@ -1,0 +1,2 @@
+placement_policy: "single_region"
+transfer_policy: "closest"

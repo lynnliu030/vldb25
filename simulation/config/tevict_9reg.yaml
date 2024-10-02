@@ -1,0 +1,4 @@
+placement_policy: "tevict"
+transfer_policy: "cheapest"
+regions: ['aws:us-east-1','aws:us-west-1','aws:eu-west-1','azure:eastus','azure:westus','azure:westeurope','gcp:us-east1-b','gcp:us-west1-a','gcp:europe-west1-b']
+window_size: -1 

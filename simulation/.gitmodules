@@ -1,0 +1,3 @@
+[submodule "dep/sky-pie-oracle"]
+	path = dep/sky-pie-oracle
+	url = https://github.com/hydro-project/sky-pie-oracle.git

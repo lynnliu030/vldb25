@@ -1,0 +1,3 @@
+This folder contains the scripts used to benchmark the skystore system. The overal benchmark utilizes the aws sdk to make requests. The benchmark follows the JuiceFS model which uses a total of 100 objects and does PUT, GET, LIST, HEAD, and DELETE operations on each object. So, the order is 100 PUTS, 100 GETS, 100 Lists, 100 HEADS, and 100 DELETES. This means the bucket should have no additional or missing objects after running the benchmark
+
+The sciprts are impelemented in go and python. Python is as easy as running `pip3 install` and running the script like any other python file. Go script can be ran by using `go run` on the file. There may be a need to run `go mod tidy` to install the correct dependencies.

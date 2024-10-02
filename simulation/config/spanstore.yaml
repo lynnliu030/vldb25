@@ -1,0 +1,7 @@
+storage_region: "aws:us-east-1"
+
+placement_policy: "spanstore"
+transfer_policy: "cheapest"
+
+# This precomputed oracle file specifies the cloud regions considered as storage places
+oracle_directory: "op/examples/example_oracle_aws-replication-factor-2"

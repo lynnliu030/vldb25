@@ -1,0 +1,24 @@
+POSSIBLE_REGIONS: ['aws:us-east-1', 'azure:westeurope', 'gcp:us-west1-a']
+TYPE: "typeE" # Random Puts and Gets 
+TYPE_DISTRIBUTION: [1,1,1,1]
+
+TYPE_A:
+  POSSIBLE_REGIONS: ['aws:us-east-1', 'azure:westeurope', 'gcp:us-west1-a']
+  TYPE: "typeA" # Random Puts and Gets 
+
+TYPE_B:
+  POSSIBLE_REGIONS: ['aws:us-east-1', 'azure:westeurope', 'gcp:us-west1-a']
+  TYPE: "typeB" # Random Puts and Gets 
+
+TYPE_C:
+  POSSIBLE_REGIONS: ['aws:us-east-1', 'azure:westeurope', 'gcp:us-west1-a']
+  TYPE: "typeC" # Random Puts and Gets 
+
+  NUM_GROUPS: 1
+  GROUP_PROB: [1]
+
+TYPE_D:
+  POSSIBLE_REGIONS: ['aws:us-east-1', 'azure:westeurope', 'gcp:us-west1-a']
+
+START_TIME: 0 days 
+END_TIME: 7 days

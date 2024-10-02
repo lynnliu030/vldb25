@@ -1,0 +1,8 @@
+storage_region: "aws:us-east-1"
+
+#placement_policy: "spanstore"
+placement_policy: "oracle"
+transfer_policy: "cheapest"
+
+oracle_directory: "op/examples/example_oracle_aws-replication-factor-2"
+#oracle_directory: "/data/tbang/docker/volumes/hydroflow-workspace/_data/sky-pie-precomputer/results/skystore/aws/1-5/80/200/PrimalSimplex/no_clarkson/"

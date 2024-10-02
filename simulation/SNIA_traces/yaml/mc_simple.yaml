@@ -1,0 +1,98 @@
+# Time option:
+# Format:  mili/ seconds/ minutes/ hours/ days
+# example: 3 days + 1 hour + 5 minutes + 36 seconds + 3 mili
+# The time of each part is (timestamp >= START_TIME and timestamp < END_TIME)
+# Size option:  
+# KB/ MB/ GB
+
+
+INIT_STATE:
+    LABEL: "init_state"
+    PUT:
+        aws:us-east-1: 100%
+
+EPOCH_1:
+    LABEL: "first part"
+    START_TIME: 0 milli
+    END_TIME: 2867146 milli 
+    POLICY_OBJ_1:
+        LABEL: "policy 1" 
+        OBJ%:  75%        
+        GET: 
+          aws:me-south-1: 25%
+          aws:eu-south-1: 50%
+          aws:us-east-1: 25%
+        PUT:
+          aws:me-south-1: 100%
+        HEAD: 
+          N/A: 100%
+        DELETE:
+          aws:me-south-1: 100%
+        COPY:  
+          N/A: 100%
+    POLICY_OBJ_2:
+        LABEL: "Policy 2" 
+        OBJ%: 25%        
+        GET: 
+          aws:us-east-1: 100%
+        PUT:
+          aws:us-east-1: 100%
+        HEAD: 
+          N/A: 100%
+        DELETE:
+          aws:us-east-1: 100%
+        COPY:  
+          aws:us-east-1: 100%
+            
+EPOCH_2:
+    LABEL: "second part"
+    START_TIME: 2867146 milli 
+    END_TIME: 3531216 milli 
+    POLICY_OBJ_1:
+        LABEL: "policy 1" 
+        OBJ%: EPOCH_1        
+        GET: 
+          aws:me-south-1: 75%
+          aws:eu-south-1: 25%
+        PUT:
+          aws:us-east-1: 50%
+          aws:me-south-1: 50%
+        HEAD: 
+          N/A: 100%
+        DELETE:
+          aws:me-south-1: 100%
+        COPY:  
+          N/A: 100%
+    POLICY_OBJ_2:
+        LABEL: "policy 2" 
+        OBJ%: EPOCH_1
+        GET: 
+          aws:eu-south-1: 100%
+        PUT:
+          aws:us-east-1: 100%
+        HEAD: 
+          N/A: 100%
+        DELETE:
+          aws:us-east-1: 100%
+        COPY:  
+          aws:us-east-1: 100%
+
+EPOCH_3:
+    LABEL: "third part"
+    START_TIME: 3531216 milli 
+    END_TIME: 7 days
+    POLICY_OBJ_1:
+        LABEL: "policy 1" 
+        OBJ%: 100%        
+        GET: 
+          aws:us-east-1: 33%
+          aws:me-south-1: 33%
+          aws:eu-south-1: 34%
+        PUT:
+          aws:me-south-1: 100%
+        HEAD: 
+          N/A: 100%
+        DELETE:
+          aws:me-south-1: 100%
+        COPY:  
+          N/A: 100%

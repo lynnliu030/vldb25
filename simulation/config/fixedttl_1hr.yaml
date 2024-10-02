@@ -1,0 +1,3 @@
+placement_policy: "fixedttl"
+transfer_policy: "cheapest"
+cache_ttl: 1 

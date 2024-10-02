@@ -1,0 +1,4 @@
+placement_policy: "tevict"
+transfer_policy: "cheapest"
+regions: ['aws:us-west-2', 'aws:us-east-1']
+window_size: -1 

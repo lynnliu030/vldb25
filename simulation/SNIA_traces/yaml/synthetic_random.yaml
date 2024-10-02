@@ -1,0 +1,37 @@
+# Time option:
+# Format:  mili/ seconds/ minutes/ hours/ days
+# example: 3 days + 1 hour + 5 minutes + 36 seconds + 3 mili
+# The time of each part is (timestamp >= START_TIME and timestamp < END_TIME)
+# Size option:  
+# KB/ MB/ GB
+# Amount
+# K/ M/ G
+
+EPOCH_1:
+    LABEL: "OBJS_LOOP_1"
+    START_TIME: 0 milli
+    END_TIME: 7 days 
+    POLICY_OBJ_1:
+        LABEL: "P1" 
+        OBJ: 10000
+        START_OBJ_KEY: 1
+        SIZE: 
+             RANGE1:
+                 "%": 33% 
+                 START_SIZE: 100KB
+                 END_SIZE: 1MB        
+             RANGE2:
+                 "%": 33% 
+                 START_SIZE: 1MB
+                 END_SIZE: 1GB       
+             RANGE3:
+                 "%": 33% 
+                 START_SIZE: 1GB
+                 END_SIZE: 1TB          
+
+ 
+        GET_STATS:
+             GET_NUM: 1000
+             GET_PUT_RATIO: 30
+             READ_ONLY: N/A 
+             WRITE_ONLY: N/A 

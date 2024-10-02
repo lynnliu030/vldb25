@@ -1,0 +1,3 @@
+Vendor,Region,Name,Group,Tier,StartingRange,EndingRange,Unit,PricePerUnit
+aws,us-east-1,s3,storage,General Purpose,0.0,1024.0,GB-Month,0.56
+aws,us-west-1,s3,storage,General Purpose,1024.0,51200.0,GB-Month,0.56
