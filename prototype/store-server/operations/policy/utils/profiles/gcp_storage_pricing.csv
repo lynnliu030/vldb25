@@ -1,0 +1,25 @@
+Vendor,Region,Name,Tier,Unit,PricePerUnit
+gcp,asia-south2-a,gcs,Standard Storage,GB-Month,0.023
+gcp,europe-north1-a,gcs,Standard Storage,GB-Month,0.02
+gcp,australia-southeast1-a,gcs,Standard Storage,GB-Month,0.023
+gcp,europe-west4-a,gcs,Standard Storage,GB-Month,0.02
+gcp,us-central1-a,gcs,Standard Storage,GB-Month,0.02
+gcp,europe-west1-b,gcs,Standard Storage,GB-Month,0.02
+gcp,australia-southeast2-a,gcs,Standard Storage,GB-Month,0.023
+gcp,us-east1-b,gcs,Standard Storage,GB-Month,0.02
+gcp,southamerica-west1-a,gcs,Standard Storage,GB-Month,0.03
+gcp,asia-east1-a,gcs,Standard Storage,GB-Month,0.02
+gcp,southamerica-east1-a,gcs,Standard Storage,GB-Month,0.035
+gcp,asia-northeast2-a,gcs,Standard Storage,GB-Month,0.023
+gcp,asia-southeast2-a,gcs,Standard Storage,GB-Month,0.023
+gcp,europe-west2-a,gcs,Standard Storage,GB-Month,0.023
+gcp,asia-east2-a,gcs,Standard Storage,GB-Month,0.023
+gcp,asia-south1-a,gcs,Standard Storage,GB-Month,0.023
+gcp,europe-west6-a,gcs,Standard Storage,GB-Month,0.025
+gcp,us-west1-a,gcs,Standard Storage,GB-Month,0.02
+gcp,europe-west3-a,gcs,Standard Storage,GB-Month,0.023
+gcp,asia-northeast3-a,gcs,Standard Storage,GB-Month,0.023
+gcp,me-west1-a,gcs,Standard Storage,GB-Month,0.021
+gcp,asia-southeast1-a,gcs,Standard Storage,GB-Month,0.02
+gcp,us-east4-a,gcs,Standard Storage,GB-Month,0.023
+gcp,us-west4-a,gcs,Standard Storage,GB-Month,0.023

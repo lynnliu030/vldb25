@@ -1,0 +1,166 @@
+set export
+
+# Set this before running test 
+AWS_ACCESS_KEY_ID := "aws_access_key_id_dummy"
+AWS_SECRET_ACCESS_KEY := "aws_secret_access_key_dummy"
+AWS_REGION := "us-west-dummy"
+
+# set dotenv-load
+
+list:
+  just --list
+
+test:
+  cargo test skyproxy -- --nocapture
+
+run:
+  RUST_LOG=INFO RUST_BACKTRACE=full cargo run
+
+run-release:
+  RUST_LOG=INFO cargo run --release
+
+run-registry:
+  docker run -p 5000:5000 --network=host \
+    -e REGISTRY_STORAGE=s3 \
+    -e REGISTRY_STORAGE_S3_BUCKET=example-test-bucket \
+    -e REGISTRY_STORAGE_S3_REGIONENDPOINT=http://localhost:8002 \
+    -e REGISTRY_STORAGE_S3_REGION=us-west-2 \
+    -e REGISTRY_STORAGE_S3_SECURE=false \
+    -e REGISTRY_STORAGE_S3_V4AUTH=false \
+    -e REGISTRY_LOG_LEVEL=debug \
+    -e REGISTRY_HEALTH_STORAGEDRIVER_ENABLED=false \
+    -e REGISTRY_STORAGE_REDIRECT_DISABLE=true \
+    -e REGISTRY_STORAGE_S3_CHUNKSIZE=5242880 \
+    -e REGISTRY_STORAGE_S3_MULTIPARTCOPYCHUNKSIZE=33554432 \
+    -e REGISTRY_STORAGE_S3_MULTIPARTCOPYMAXCONCURRENCY=1000 \
+    -e REGISTRY_STORAGE_S3_MULTIPARTCOPYTHRESHOLDSIZE=1000000000 \
+    registry:2
+
+install-local-s3:
+  cargo install --force \
+    --git https://github.com/Nugine/s3s \
+    --rev 0cc49cf24c05eeb6a809882d1a7b76e953822c0d \
+    --bin s3s-fs \
+    --features="binary" \
+    s3s-fs
+
+_check-local-s3:
+  which s3s-fs || (echo "s3s-fs not installed, run `just install-local-s3`" && exit 1)
+
+clean-local-s3:
+  rm -rf /tmp/s3-local-cache
+
+run-local-s3: _check-local-s3
+  mkdir -p /tmp/s3-local-cache
+  # RUST_LOG="s3s::service=DEBUG,s3s_fs=DEBUG" s3s-fs --host localhost --port 8014 --access-key $AWS_ACCESS_KEY_ID --secret-key $AWS_SECRET_ACCESS_KEY /tmp/s3-local-cache
+  RUST_LOG="s3s_fs=DEBUG" s3s-fs --host localhost --port 8014 --access-key $AWS_ACCESS_KEY_ID --secret-key $AWS_SECRET_ACCESS_KEY --domain-name localhost:8014 /tmp/s3-local-cache
+
+run-sample-push:
+  docker pull alpine
+  docker tag alpine localhost:5000/alpine
+  docker --debug --log-level=debug push localhost:5000/alpine
+
+run-sample-pull:
+  docker image rm localhost:5000/alpine
+  docker pull localhost:5000/alpine
+
+# s3-args := "--endpoint-url http://127.0.0.1:8002 --no-verify-ssl --no-sign-request"
+s3-args := "--endpoint-url http://127.0.0.1:8002 --no-verify-ssl" # s3fs test 
+
+run-s3fs:
+  mkdir -p test_mount
+  s3fs default-skybucket test_mount -o dbglevel=info -f -o curldbg -o url=http://127.0.0.1:8002 -o allow_other -o no_check_certificate -o use_path_request_style
+
+run-cli-register-put-get:
+  cd ../store-server && just register-config 
+  aws s3api {{s3-args}} put-object --bucket default-skybucket --key readme-2 --body "./README.md"
+  aws s3api {{s3-args}} list-objects --bucket default-skybucket
+  rm readme-2 || true
+  aws s3api {{s3-args}} get-object --bucket default-skybucket --key readme-2 readme-2
+  cat readme-2
+  rm readme-2
+
+run-cli-put-get:
+  aws s3api {{s3-args}} put-object --bucket default-skybucket --key readme-2 --body "./README.md"
+  aws s3api {{s3-args}} list-objects --bucket default-skybucket
+  rm readme-2 || true
+  aws s3api {{s3-args}} get-object --bucket default-skybucket --key readme-2 readme-2
+  cat readme-2
+  rm readme-2
+
+run-cli-create-bucket:
+  aws s3api {{s3-args}} create-bucket --bucket example-test-bucket
+
+run-cli-delete-bucket:
+  aws s3api {{s3-args}} delete-bucket --bucket example-test-bucket
+
+run-cli-list-buckets:
+  aws s3api {{s3-args}} list-buckets
+  
+run-cli-put:
+  aws s3api {{s3-args}} put-object --bucket example-test-bucket --key readme-2 --body "./README.md"
+
+run-cli-list:
+  aws s3api {{s3-args}} list-objects --bucket example-test-bucket
+
+run-cli-get:
+  rm readme-2 || true
+  aws s3api {{s3-args}} get-object --bucket example-test-bucket --key readme-2 readme-2
+  cat readme-2
+  rm readme-2
+
+run-cli-multipart:
+  aws s3api {{s3-args}} create-multipart-upload --bucket example-test-bucket --key readme-3 | jq -r '.UploadId' > /tmp/upload-id
+  aws s3api {{s3-args}} upload-part --bucket example-test-bucket --key readme-3 --part-number 1 --body README.md --upload-id $(cat /tmp/upload-id) | jq -r '.ETag' > /tmp/ETag-1
+  aws s3api {{s3-args}} upload-part --bucket example-test-bucket --key readme-3 --part-number 2 --body README.md --upload-id $(cat /tmp/upload-id) | jq -r '.ETag' > /tmp/ETag-2
+  aws s3api {{s3-args}} complete-multipart-upload --bucket example-test-bucket --key readme-3 --multipart-upload "Parts=[{ETag=$(cat /tmp/ETag-1),PartNumber=1},{ETag=$(cat /tmp/ETag-2),PartNumber=2}]" --upload-id $(cat /tmp/upload-id)
+
+run-skystore-server:
+  cd ../store-server && just clean && just run
+
+purge-buckets:
+  az storage blob delete-batch --account-key $STORAGE_ACCESS_KEY --account-name $STORAGE_ACCOUNT --source sky-s3-backend
+  aws s3 rm s3://sky-s3-backend --recursive --output text
+  gsutil -m rm -a gs://sky-s3-backend/**
+
+run-unit-test-once:
+  #!/usr/bin/env bash
+  set -ex
+
+  just run-local-s3 &
+  local_s3_proc=$!
+
+  just run-skystore-server &
+  skystore_server_proc=$!
+
+  cleanup() {
+    kill -9 $local_s3_proc
+    kill -9 $skystore_server_proc
+  }
+  trap cleanup EXIT
+
+  sleep 2
+  just test
+
+init:
+  #!/usr/bin/env bash
+    set -e
+
+    just run-skystore-server &
+    skystore_server_proc=$!
+
+    just run &
+    registry_proc=$!
+
+    cleanup() {
+        kill -9 $skystore_server_proc
+        kill -9 $registry_proc
+    }
+    trap cleanup EXIT
+
+    echo "Services started. Press Ctrl+C to stop."
+
+    sleep 2
+    cd ../store-server && just register-config 
+
+    wait 

@@ -1,0 +1,59 @@
+list:
+    just --list
+
+install:
+    pip install -r requirements.txt
+
+clean:
+    #!/usr/bin/env bash
+    rm skystore.db || true
+
+
+run-debug:
+    LOG_SQL=1 uvicorn --http httptools app:app --reload --port 3000
+
+run:
+    uvicorn app:app --reload --port 3000
+
+test args='': clean
+    pytest -v -s --show-capture=no . {{args}}
+
+test_manual args='': clean
+    pytest -v -s --show-capture=no test_manual.py {{args}}
+
+test_ttl args='': clean
+    pytest -v -s --show-capture=no test_ttl.py {{args}}
+
+test_skystore args='': clean
+    pytest -v -s --show-capture=no test_skystore.py {{args}}
+    
+register-config:
+    python register.py
+
+dump:
+    sqlite3 skystore.db .dump
+
+generate-openapi:
+    #!/usr/bin/env bash
+    # run the app in the background
+    uvicorn app:app --port 3000 &
+    # get the pid
+    pid=$!
+    # curl the openapi.json, retry few times
+    for i in {1..5}; do
+        curl http://localhost:3000/openapi.json > ../generated/openapi.json && break
+        sleep 1
+    done
+    # kill the app
+    kill $pid
+
+_check-java:
+    java -version || (echo "java not found, please install java" && exit 1)
+
+generate-rust: _check-java
+    #!/usr/bin/env bash
+    npx @openapitools/openapi-generator-cli generate -g rust \
+        -i ../generated/openapi.json \
+        -o ../generated/skystore-rust-client \
+        --additional-properties=preferUnsignedInt=true,bestFitInt=true,packageName=skystore-rust-client
+    rm openapitools.json

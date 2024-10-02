@@ -1,0 +1,9 @@
+{
+    "bucket": "default-skybucket",
+    "config": {
+        "physical_locations": [
+        ]
+    },
+    "skystore_bucket_prefix" : "skystore-second",
+    "versioning": false
+}

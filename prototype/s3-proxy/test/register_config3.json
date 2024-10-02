@@ -1,0 +1,22 @@
+{
+    "bucket": "default-skybucket",
+    "config": {
+        "physical_locations": [
+            {
+                "name": "aws:eu-south-1",
+                "cloud": "aws",
+                "region": "eu-south-1",
+                "bucket": "skystore-eu-south-1",
+                "is_primary": true
+            },
+            {
+                "name": "aws:eu-north-1",
+                "cloud": "aws",
+                "region": "eu-north-1",
+                "bucket": "skystore-eu-north-1"
+            }
+        ]
+    },
+    "skystore_bucket_prefix" : "skystore",
+    "versioning": true
+}
