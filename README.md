@@ -75,3 +75,5 @@ The folder structured as:
 ```
 python main.py --config [CONFIG] --trace [TRACE] --vm [NUM_VMS] --setbase [SET_BASE] --simversion [SIM_VERSION]
 ```
+### 2,3,6,9-region traces
+The traces we use in our cost estimation is in `/traces` folder. Containing 2, 3, 6, 9 region, 5 SNIA IBM traces, with different types of workloads generated when number of regions is greater than 2. 
