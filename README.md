@@ -1,4 +1,5 @@
 # Cloud Storage 
+
 ## Prototype Code 
 This repository contains our prototype code implementing GlobalStore, a global object store built on top of the object stores in the cloud. It currently support S3, Azure Blob, and GCS. Users interact with SkyStore through S3 API.
 
@@ -14,7 +15,7 @@ This repository is structured as follows:
 
 Prerequisites: see `requirements.txt` in `/prototype/store-server`
 
-## Test S3-Proxy and Store-Server Locally 
+### Test S3-Proxy and Store-Server Locally 
 
 To setup the environment:
 
@@ -58,5 +59,19 @@ cd store-server
 just test
 ```
 
-## Setting Up Store-Server and S3-Proxy in remote VMs 
+### Setting Up Store-Server and S3-Proxy in remote VMs 
 * End-to-end benchmark is run in this [script](https://github.com/lynnliu030/storage/blob/main/prototype/run_client.py)
+
+## Simulation code 
+This repository contains our simulation code implementing various policies in `/simulation` folder, the instructions is in README.md inside this folder.
+
+The folder structured as:
+* `/simulation/SNIA_traces`: scripts containing how we generate multi-cloud traces
+* `/simulation/benchmark`: scripts on benchmarking real object stores
+* `/simulation/config`: various policy config
+* `/simulation/src`: poilcy implementation - our policy is named `tevict_new` and `tevict_ranges_new` 
+
+### Usage 
+```
+python main.py --config [CONFIG] --trace [TRACE] --vm [NUM_VMS] --setbase [SET_BASE] --simversion [SIM_VERSION]
+```
