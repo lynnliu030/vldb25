@@ -27,11 +27,20 @@ huggingface-cli login
 ```
 
 ## Dataset download
-Most datasets are located in `/datasets` folder. For larger dataset we use in our experiments, download it with S3 
+Most datasets are located in `/datasets` folder. For larger dataset we use in our experiments, download it with S3. 
 ```
-# download fever.csv and squad.csv for RAG 
+# install dependencies
+pip install awscli --user
 
-# download for accuracy experiments 
+# load credentials 
+aws configure
+
+# download
+aws s3 cp s3://mlsys-artifact . --recursive
+
+# move to the right files
+mv fever.csv squad.csv datasets/
+mv fever_with_evidence_5.csv fever_reordered.csv /run/accuracy/datasets/
 ```
 
 ## Main Experiments (Fig 3, Fig 4, Tab 2, Tab 5)
