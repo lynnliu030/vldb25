@@ -5,3 +5,7 @@ logs
 logs/*
 
 *egg-info*
+
+fever.csv
+squad.csv
+fever_*
