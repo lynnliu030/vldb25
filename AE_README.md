@@ -21,6 +21,11 @@ export PYSPARK_PYTHON=/opt/conda/bin/python3.10
 export PYSPARK_DRIVER_PYTHON=/opt/conda/bin/python3.10
 ```
 
+Login with huggingface, using a token that access to the gated Llama models. 
+```
+huggingface-cli login
+```
+
 ## Dataset download
 Most datasets are located in `/datasets` folder. For larger dataset we use in our experiments, download it with S3 
 ```
@@ -35,13 +40,21 @@ This executes Filter, Projection, RAG, Multi-LLM invocation, and Aggregation que
 ### Runtime and Solver Time (s) (Fig 3, Fig 4, Tab 5) 
 Run the following command to reproduce  results from Fig 3, Fig 4, and Tab 5 on Nvidia L4 instances. 
 ```
-bash /run/main_queries/fig_3_4_run_script.sh 
+bash run/main_queries/fig_3_4_run_script.sh 
 ```
 
 In folder `logs/fig3-4/query`, find the results in log file in this format `{query}_${dataset}_${algorithm}_output_vllm.txt`. 
 
-The results of end-to-end query runtime(s) are as shown in Fig 3, Fig 4. Example as follows. 
+The results of end-to-end query runtime(s) are as shown in Fig 3, Fig 4. Example as follows. The reported results in Figure 3, Figure 4 from the paper are in the field `Total time`. 
 ```
+*************************Result*************************
+Algorithm: quick_greedy
+Number of rows: 15000
+Algorithm Runtime: 7.329204082489014
+LLM time: 1837.8235006332397
+SQL Operators time: 7.1459527015686035
+Total time: 1852.2986574172974
+Requests per Second (RPS): 8.16182837733417
 ```
 The results of solver runtimes (s) in Tab 5 are also logged in this folder. Example as follows. 
 ```
@@ -65,6 +78,7 @@ bash /run/main_queries/fig_5_tensor_parallel.sh
 Results for the end-to-end runtime can be seen in `logs/fig5/query` as shown before. 
 
 ## Cost Estimation (Tab 3, Tab 4) 
+### OpenAI Runs (Tab 3) 
 Run 
 ```
 ```
@@ -72,12 +86,54 @@ Run
 Expected output 
 ```
 ```
+### Estimated Cost (Tab 4)
+This script takes in the PHR calculated from main experiment runs and estimate the cost savings on OpenAI and Anthropic using our algorithm GGR compared to naive vLLM cache algorithm. The expected outputs are shown in Table 4 from the original paper. 
+```
+python /run/cost/estimate_cost_savings.py
+```
+
 ## Accuracy Experiments (Fig 6) 
-Run 
-```
-```
+All the scripts for accuracy experiments in Figure 6 are contained in the `/run/accuracy` folder. 
 
-Expected output 
 ```
+cd /run/accuracy 
 ```
+### All Datasets except FEVER
+
+For all datasets except FEVER, we have randomly sampled the same 100 rows from both the original dataset and the column reordered version of the dataset, and manually labelled them. The files for the sampled original dataset and the sampled reordered dataset with the manual labels are in the `./datasets` directory.
+
+To reproduce the accuracy results, first generate predictions for each row using either Llama models or GPT4o by following the instructions below.
+
+#### Llama Models
+Run `python llama_accuracy.py --huggingface-hub-token=<INSERT_HUGGINGFACE_API_KEY> --dataset=<DATASET> --model=<MODEL>` to run inference on the original non-reordered dataset using the model of your choice. This will add a new column to the input dataset CSV with the inference outputs and write it back to the same location (inside `datasets` directory).
+
+To run inference on the reordered dataset, simply add the `--reordered` flag when running the command.
+
+You can run `python llama_accuracy.py --help` to see the full list of supported models and datasets. Note that for Llama-70B, the scripts are currently setup to run with 8-way tensor parallelism, which requires 8 GPUs on a node. You can update the script to change the tp factor when initializing the vLLM engine, but all of our experiments were run iwht `tp=8`.
+
+#### OpenAI GPT4o
+Run `python gpt_accuracy.py --openai-api-key=<INSERT_OPENAI_API_KEY> --dataset=<DATASET> --model=<MODEL>` to run inference on the original non-reordered dataset using the model of your choice. This will add a new column to the input dataset CSV with the inference outputs and write it back to the same location (inside `datasets` directory).
+
+To run inference on the reordered dataset, simply add the `--reordered` flag when running the command.
+
+You can run `python gpt_accuracy.py --help` to see the full list of supported datasets.
+
+### FEVER
+
+For Fever, we have the ground truth labels for every row in the dataset. The files are too large to upload to git, so we read them from cloud storage.
+
+#### Llama Models
+Run `python llama_accuracy_fever.py --huggingface-hub-token=<INSERT_HUGGINGFACE_API_KEY> --model=<MODEL>` to run inference on the original non-reordered dataset using the model of your choice. This will add a new column to the input dataset CSV with the inference outputs and write it back to the same location (inside `datasets` directory).
+
+To run inference on the reordered dataset, simply add the `--reordered` flag when running the command.
+
+You can run `python llama_accuracy_fever.py --help` to see the full list of supported models. Note that for Llama-70B, the scripts are currently setup to run with 8-way tensor parallelism, which requires 8 GPUs on a node. You can update the script to change the tp factor when initializing the vLLM engine, but all of our experiments were run iwht `tp=8`.
+
+#### OpenAI GPT4o
+Run `python gpt_accuracy_fever.py --openai-api-key=<INSERT_OPENAI_API_KEY>` to run inference on the original non-reordered dataset using the model of your choice. This will add a new column to the input dataset CSV with the inference outputs and write it back to the same location (inside `datasets` directory).
+
+To run inference on the reordered dataset, simply add the `--reordered` flag when running the command.
+
+### Performing Bootstrapping
+Once you have generated the inference results for all the datasets, you can run `bootstrapping.ipynb` to execute the bootstrapping steps and get the accuracy percentiles for both the original and reordered datasets. Simply modify the path in the notebook to point to which dataset you want to get accuracy results on.
 
