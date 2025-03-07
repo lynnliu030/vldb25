@@ -74,7 +74,7 @@ Expected output
 ```
 ```
 ### Estimated Cost (Tab 4)
-This script takes in the PHR calculated from main experiment runs and estimate the cost savings of using our algorithm GGR compared to naive vLLM cache algorithm. The expected outputs are shown in Table 4 from the original paper. 
+This script takes in the PHR calculated from main experiment runs and estimate the cost savings on OpenAI and Anthropic using our algorithm GGR compared to naive vLLM cache algorithm. The expected outputs are shown in Table 4 from the original paper. 
 ```
 python /run/cost/estimate_cost_savings.py
 ```
