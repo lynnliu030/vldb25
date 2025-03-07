@@ -88,11 +88,43 @@ python /run/cost/estimate_cost_savings.py
 ```
 
 ## Accuracy Experiments (Fig 6) 
-Run 
-```
-```
 
-Expected output 
-```
-```
+### All Datasets except FEVER
+
+For all datasets except FEVER, we have randomly sampled the same 100 rows from both the original dataset and the column reordered version of the dataset, and manually labelled them. The files for the sampled original dataset and the sampled reordered dataset with the manual labels are in the `./datasets` directory.
+
+To reproduce the accuracy results, first generate predictions for each row using either Llama models or GPT4o by following the instructions below.
+
+#### Llama Models
+Run `python llama_accuracy.py --huggingface-hub-token=<INSERT_HUGGINGFACE_API_KEY> --dataset=<DATASET> --model=<MODEL>` to run inference on the original non-reordered dataset using the model of your choice. This will add a new column to the input dataset CSV with the inference outputs and write it back to the same location (inside `datasets` directory).
+
+To run inference on the reordered dataset, simply add the `--reordered` flag when running the command.
+
+You can run `python llama_accuracy.py --help` to see the full list of supported models and datasets. Note that for Llama-70B, the scripts are currently setup to run with 8-way tensor parallelism, which requires 8 GPUs on a node. You can update the script to change the tp factor when initializing the vLLM engine, but all of our experiments were run iwht `tp=8`.
+
+#### OpenAI GPT4o
+Run `python gpt_accuracy.py --openai-api-key=<INSERT_OPENAI_API_KEY> --dataset=<DATASET> --model=<MODEL>` to run inference on the original non-reordered dataset using the model of your choice. This will add a new column to the input dataset CSV with the inference outputs and write it back to the same location (inside `datasets` directory).
+
+To run inference on the reordered dataset, simply add the `--reordered` flag when running the command.
+
+You can run `python gpt_accuracy.py --help` to see the full list of supported datasets.
+
+### FEVER
+
+For Fever, we have the ground truth labels for every row in the dataset. The files are too large to upload to git, so we read them from cloud storage.
+
+#### Llama Models
+Run `python llama_accuracy_fever.py --huggingface-hub-token=<INSERT_HUGGINGFACE_API_KEY> --model=<MODEL>` to run inference on the original non-reordered dataset using the model of your choice. This will add a new column to the input dataset CSV with the inference outputs and write it back to the same location (inside `datasets` directory).
+
+To run inference on the reordered dataset, simply add the `--reordered` flag when running the command.
+
+You can run `python llama_accuracy_fever.py --help` to see the full list of supported models. Note that for Llama-70B, the scripts are currently setup to run with 8-way tensor parallelism, which requires 8 GPUs on a node. You can update the script to change the tp factor when initializing the vLLM engine, but all of our experiments were run iwht `tp=8`.
+
+#### OpenAI GPT4o
+Run `python gpt_accuracy_fever.py --openai-api-key=<INSERT_OPENAI_API_KEY>` to run inference on the original non-reordered dataset using the model of your choice. This will add a new column to the input dataset CSV with the inference outputs and write it back to the same location (inside `datasets` directory).
+
+To run inference on the reordered dataset, simply add the `--reordered` flag when running the command.
+
+### Performing Bootstrapping
+Once you have generated the inference results for all the datasets, you can run `bootstrapping.ipynb` to execute the bootstrapping steps and get the accuracy percentiles for both the original and reordered datasets. Simply modify the path in the notebook to point to which dataset you want to get accuracy results on.
 
