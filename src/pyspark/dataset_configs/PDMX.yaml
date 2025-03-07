@@ -1,0 +1,6 @@
+filename: PDMX.csv
+
+merged_columns:
+  - ['path', 'metadata']
+  - ['hasmetadata', 'isofficial', 'isuserpublisher', 'isdraft', 'hasannotations', 'subsetall']
+  

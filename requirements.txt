@@ -1,0 +1,12 @@
+openai
+langchain
+pyspark
+jupyter 
+pandas 
+matplotlib
+kaggle
+transformers
+langchain_community
+faiss-cpu
+pyyaml
+networkx

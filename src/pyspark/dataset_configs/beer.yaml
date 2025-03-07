@@ -1,0 +1,4 @@
+filename: beer.csv
+
+merged_columns:
+  - ['beer/beerId', 'beer/name']

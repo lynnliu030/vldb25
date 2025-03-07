@@ -1,0 +1,8 @@
+filename: products.csv
+merged_columns:
+  - [product_title, parent_asin]
+
+one_deps:
+  - [parent_asin, description]
+  
+filtering_field: text

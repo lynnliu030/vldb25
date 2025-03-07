@@ -1,0 +1,4 @@
+filename: movies.csv
+merged_columns:
+  - [movieinfo, movietitle, rottentomatoeslink]
+filtering_field: reviewcontent

@@ -1,0 +1,3 @@
+algorithm: naive
+colmerging: false
+early_stop: false

@@ -1,0 +1,6 @@
+algorithm: quick_greedy
+colmerging: true
+early_stop: 100000
+distinct_value_threshold: 0.7
+row_stop: 4
+col_stop: 2 
