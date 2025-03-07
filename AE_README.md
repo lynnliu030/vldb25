@@ -40,8 +40,16 @@ bash /run/main_queries/fig_3_4_run_script.sh
 
 In folder `logs/fig3-4/query`, find the results in log file in this format `{query}_${dataset}_${algorithm}_output_vllm.txt`. 
 
-The results of end-to-end query runtime(s) are as shown in Fig 3, Fig 4. Example as follows. 
+The results of end-to-end query runtime(s) are as shown in Fig 3, Fig 4. Example as follows. The reported results in Figure 3, Figure 4 from the paper are in the field `Total time`. 
 ```
+*************************Result*************************
+Algorithm: quick_greedy
+Number of rows: 15000
+Algorithm Runtime: 7.329204082489014
+LLM time: 1837.8235006332397
+SQL Operators time: 7.1459527015686035
+Total time: 1852.2986574172974
+Requests per Second (RPS): 8.16182837733417
 ```
 The results of solver runtimes (s) in Tab 5 are also logged in this folder. Example as follows. 
 ```
