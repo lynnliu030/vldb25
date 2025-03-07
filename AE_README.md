@@ -21,6 +21,11 @@ export PYSPARK_PYTHON=/opt/conda/bin/python3.10
 export PYSPARK_DRIVER_PYTHON=/opt/conda/bin/python3.10
 ```
 
+Login with huggingface, using a token that access to the gated Llama models. 
+```
+huggingface-cli login
+```
+
 ## Dataset download
 Most datasets are located in `/datasets` folder. For larger dataset we use in our experiments, download it with S3 
 ```
