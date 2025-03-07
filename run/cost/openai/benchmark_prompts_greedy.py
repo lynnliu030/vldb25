@@ -4,9 +4,10 @@ import time
 import csv
 import pickle
 import re
+import os 
 from transformers import AutoTokenizer
 
-openai.api_key = "<Your API Key>"
+openai.api_key = os.getenv("OPENAI_API_KEY")
 tokenizer = AutoTokenizer.from_pretrained("hf-internal-testing/llama-tokenizer")
 anthropic_client = anthropic.Anthropic()
 

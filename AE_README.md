@@ -84,7 +84,10 @@ First, set the Anthropic key:
 export ANTHROPIC_API_KEY="your-anthropic-api-key"
 ```
 
-Second, go to the file *./run/cost/openai/benchmark_prompts_naive.py* to set the OpenAI key on line 9.
+Second, set the OpenAI:
+```bash
+export OPENAI_API_KEY="your-openai-api-key"
+```
 
 Next, run the test with the naive approach via:
 ```bash
