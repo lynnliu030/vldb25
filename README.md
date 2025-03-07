@@ -1,4 +1,4 @@
-# Cloud Storage 
+# Cloud Storage [VLDB 25]
 
 ## Prototype Code 
 This repository contains our prototype code implementing GlobalStore, a global object store built on top of the object stores in the cloud. It currently support S3, Azure Blob, and GCS. Users interact with SkyStore through S3 API.
