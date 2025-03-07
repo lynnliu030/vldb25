@@ -12,7 +12,7 @@ pip install -e .
 sudo apt-get update; sudo apt install default-jdk
 ```
 
-Put the following into `~/.bashrc` as necessary.
+Put the following into `~/.bashrc` as necessary. Please update the following paths depending on your conda installation.
 ```
 export JAVA_HOME=/usr
 export PATH=$JAVA_HOME/bin:$PATH
@@ -21,7 +21,7 @@ export PYSPARK_PYTHON=/opt/conda/bin/python3.10
 export PYSPARK_DRIVER_PYTHON=/opt/conda/bin/python3.10
 ```
 
-Login with huggingface, using a token that access to the gated Llama models. 
+Login with huggingface, using a token that access to the gated Meta-Llama models. Specifically, access to meta-llama/Meta-Llama-3-8B-Instruct is required.
 ```
 huggingface-cli login
 ```
