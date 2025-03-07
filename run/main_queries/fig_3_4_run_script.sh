@@ -210,7 +210,7 @@ declare -A query_datasets=(
 algorithms=("naive" "quick_greedy_colmerging")
 
 # Query types
-queries=("projection" "filter" "multi_llm" "aggregation" "rag")
+queries=("projection" "filter" "multi-llm" "aggregation" "rag")
 
 # queries=("filter")
 
