@@ -17,7 +17,7 @@ We also include the scripts for evaluating 5 different query types (LLM filter, 
 │   └── pyspark/
 └── tests/
 ```
-* `/datasets`: 7 dataset csvs. Detailed instructions for large file download see [AE_README.md](https://github.com/lynnliu030/MLSys-LLM-SQL-Artifact/blob/main/AE_README.md). 
+* `/datasets`: 7 dataset csvs. Detailed instructions for large file download see [AE_README.md](https://github.com/lynnliu030/artifact-eval/blob/llmsql/AE_README.md). 
 * `/run`: scripts to reproduce experiments in the paper. 
 * `/src/core`: scripts for the algorithm implementations are in this folder.
     * `quick_greedy.py` implements the core GGR algorithm.
@@ -26,4 +26,4 @@ We also include the scripts for evaluating 5 different query types (LLM filter, 
 
 
 ## Run Instructions 
-Instruction to run and reprodcue the main results for the paper are in [AE_README.md](https://github.com/lynnliu030/MLSys-LLM-SQL-Artifact/blob/main/AE_README.md).  
+Instruction to run and reprodcue the main results for the paper are in [AE_README.md](https://github.com/lynnliu030/artifact-eval/blob/llmsql/AE_README.md).  
