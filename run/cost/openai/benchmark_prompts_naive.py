@@ -6,7 +6,7 @@ import pickle
 import re
 from transformers import AutoTokenizer
 
-openai.api_key = "<your key>"
+openai.api_key = "<Your API Key>"
 tokenizer = AutoTokenizer.from_pretrained("hf-internal-testing/llama-tokenizer")
 anthropic_client = anthropic.Anthropic()
 
@@ -52,7 +52,7 @@ def call_anthropic_with_caching(system_instruction, cached_prompt, rest_prompt):
     return input_tokens, output_tokens, input_tokens_cache_read, input_tokens_cache_create
 
 
-def load_prompts_from_csv(csv_file_path, max_prompts=100000, top_n=100):
+def load_prompts_from_csv(csv_file_path, max_prompts=100000, top_n=1000):
     """Load and format the first `max_prompts` from the given CSV file."""
     prompts = []
 
@@ -190,9 +190,15 @@ def main(system_instruction, csv_files, output_file, anthropic: bool = False):
     print("\nProcessing completed. Results saved to", output_file)
 
 
-csv_files = ["fever_greedy_user_prompts_1000.csv"]  # 'fever_naive_user_prompts_1000.csv'
-output_file = "results.txt"
+# OpenAI
+csv_files = ["./run/cost/openai/fever_naive_user_prompts_1000.csv"]
+output_file = "./run/cost/openai/results/openai_fever_naive_user_prompts.txt"
 system_instruction = "You are a data analyst. Use the provided JSON data to answer the user query based on the specified fields. Respond with only the answer, no extra formatting."
+main(system_instruction, csv_files, output_file, anthropic=False)
 
+# Anthropic
+rows_with_more_than_1024_tokens = 0
+csv_files = ["./run/cost/openai/fever_naive_user_prompts_1000.csv"]
+output_file = "./run/cost/openai/results/anthropic_fever_naive_user_prompts.txt"
+system_instruction = "You are a data analyst. Use the provided JSON data to answer the user query based on the specified fields. Respond with only the answer, no extra formatting."
 main(system_instruction, csv_files, output_file, anthropic=True)
-# main(system_instruction, csv_files, output_file)

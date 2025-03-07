@@ -68,11 +68,45 @@ Results for the end-to-end runtime can be seen in `logs/fig5/query` as shown bef
 ### OpenAI Runs (Tab 3) 
 Run 
 ```
+
 ```
 
 Expected output 
 ```
 ```
+
+## Anthropic Runs (Tab 3)
+
+First, set the Anthropic key:
+```bash
+export ANTHROPIC_API_KEY="your-anthropic-api-key"
+```
+
+Second, go to the file *./run/cost/openai/benchmark_prompts_naive.py* to set the OpenAI key on line 9.
+
+Next, run the test with the naive approach via:
+```bash
+python ./run/cost/openai/benchmark_prompts_naive.py
+```
+
+The expected output gets stored in the files:
+
+- results_openai_fever_naive_user_prompts.txt
+- results_anthropic_fever_naive_user_prompts.txt
+
+
+Next, we need to either change the API key for both Anthropic and OpenAI, or wait for ~2 hours for the cache to invalidate. Afterward, run the test with the greedy approach via:
+
+```bash
+python ./run/cost/openai/benchmark_prompts_greedy.py
+```
+
+The expected output gets stored in the files:
+
+- results_openai_fever_greedy_user_prompts.txt
+- results_anthropic_fever_greedy_user_prompts.txt
+
+
 ### Estimated Cost (Tab 4)
 This script takes in the PHR calculated from main experiment runs and estimate the cost savings of using our algorithm GGR compared to naive vLLM cache algorithm. The expected outputs are shown in Table 4 from the original paper. 
 ```
