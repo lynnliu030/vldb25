@@ -65,6 +65,7 @@ bash /run/main_queries/fig_5_tensor_parallel.sh
 Results for the end-to-end runtime can be seen in `logs/fig5/query` as shown before. 
 
 ## Cost Estimation (Tab 3, Tab 4) 
+### OpenAI Runs (Tab 3) 
 Run 
 ```
 ```
@@ -72,6 +73,12 @@ Run
 Expected output 
 ```
 ```
+### Estimated Cost (Tab 4)
+This script takes in the PHR calculated from main experiment runs and estimate the cost savings of using our algorithm GGR compared to naive vLLM cache algorithm. The expected outputs are shown in Table 4 from the original paper. 
+```
+python /run/cost/estimate_cost_savings.py
+```
+
 ## Accuracy Experiments (Fig 6) 
 Run 
 ```
