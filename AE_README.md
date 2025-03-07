@@ -40,7 +40,7 @@ This executes Filter, Projection, RAG, Multi-LLM invocation, and Aggregation que
 ### Runtime and Solver Time (s) (Fig 3, Fig 4, Tab 5) 
 Run the following command to reproduce  results from Fig 3, Fig 4, and Tab 5 on Nvidia L4 instances. 
 ```
-bash /run/main_queries/fig_3_4_run_script.sh 
+bash run/main_queries/fig_3_4_run_script.sh 
 ```
 
 In folder `logs/fig3-4/query`, find the results in log file in this format `{query}_${dataset}_${algorithm}_output_vllm.txt`. 
