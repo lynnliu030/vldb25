@@ -93,7 +93,7 @@ First, set the Anthropic key:
 export ANTHROPIC_API_KEY="your-anthropic-api-key"
 ```
 
-Second, set the OpenAI:
+Second, set the OpenAI key:
 ```bash
 export OPENAI_API_KEY="your-openai-api-key"
 ```
