@@ -93,7 +93,11 @@ python /run/cost/estimate_cost_savings.py
 ```
 
 ## Accuracy Experiments (Fig 6) 
+All the scripts for accuracy experiments in Figure 6 are contained in the `/run/accuracy` folder. 
 
+```
+cd /run/accuracy 
+```
 ### All Datasets except FEVER
 
 For all datasets except FEVER, we have randomly sampled the same 100 rows from both the original dataset and the column reordered version of the dataset, and manually labelled them. The files for the sampled original dataset and the sampled reordered dataset with the manual labels are in the `./datasets` directory.
