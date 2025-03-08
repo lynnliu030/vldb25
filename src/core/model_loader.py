@@ -62,7 +62,7 @@ class LLMModel:
     @classmethod
     def get_tokenizer(cls):
         if cls._tokenizer is None:
-            cls._tokenizer = AutoTokenizer.from_pretrained("meta-llama/Meta-Llama-3-8B-Instruct")
+            cls._tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-3.1-8B-Instruct")
         return cls._tokenizer
 
 

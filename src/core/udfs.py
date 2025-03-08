@@ -324,7 +324,11 @@ def llm_average_naive(query: str, contexts: List, fields: List, guided_choice: L
     )
     models = client.models.list()
     model = models.data[0].id
-    outputs = json.loads(post_http_request(model, prompts, temperature=0, guided_choice=guided_choice, port=port).content)
+    if guided_choice is not None and guided_choice == []:
+        max_tokens = 5
+        outputs = json.loads(post_http_request(model, prompts, temperature=0, max_tokens=max_tokens, guided_choice=None, port=port).content)
+    else:
+        outputs = json.loads(post_http_request(model, prompts, temperature=0, guided_choice=guided_choice, port=port).content)
     input_token_length = outputs["usage"]["prompt_tokens"]
     output_token_length = outputs["usage"]["completion_tokens"]
     total_tokens = outputs["usage"]["total_tokens"]
@@ -339,46 +343,3 @@ def llm_average_naive(query: str, contexts: List, fields: List, guided_choice: L
             udf_outputs.append(3)
 
     return udf_outputs
-
-
-@udf(returnType=ArrayType(StringType()))
-def llm_rag(query: str, contexts: List, fields: List, guided_choice: List[str] = None, port: int = 8000):
-    """
-    TODO: add description here
-    """
-    prompts = []
-    for entry in contexts:
-        fields_json = {}
-        for i in range(len(fields)):
-            field_val = entry[i] if entry[i] else "None"
-            if str(field_val).startswith("question: "):
-                question = field_val.split("question: ", 1)[1]
-                fields_json["Question"] = question
-            elif str(field_val).startswith("claim: "):
-                claim = field_val.split("claim: ", 1)[1]
-                fields_json["Claim"] = claim
-            else:
-                fields_json[f"Evidence {i + 1}"] = field_val
-        user_prompt = f"Answer the below query:\n{query}\n Given the following data:\n {fields_json}"
-        prompt = generate_prompt(user_prompt=user_prompt, system_prompt=SYSTEM_PROMPT)
-        if prompt is not None:
-            prompts.append(prompt)
-
-    openai_api_base = f"http://localhost:{port}/v1"
-    client = OpenAI(
-        api_key=openai_api_key,
-        base_url=openai_api_base,
-    )
-
-    models = client.models.list()
-    model = models.data[0].id
-    outputs = json.loads(post_http_request(model, prompts, temperature=0, guided_choice=guided_choice, port=port).content)
-    input_token_length = outputs["usage"]["prompt_tokens"]
-    output_token_length = outputs["usage"]["completion_tokens"]
-    total_tokens = outputs["usage"]["total_tokens"]
-    print("-" * 50)
-    print(
-        f"Port: {port}, Num_reqs: {len(prompts)}, Input token length: {input_token_length}, Output token length: {output_token_length}, Total tokens: {total_tokens}"
-    )
-
-    return [output["text"] for output in outputs["choices"]]

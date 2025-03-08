@@ -110,8 +110,6 @@ async def single_select(
         df, _ = QuickGreedy().reorder(
             df,
             early_stop=solver_config["early_stop"],
-            row_stop=solver_config.get("row_stop", None),
-            col_stop=solver_config.get("col_stop", None),
             col_merge=merged_cols,
             one_way_dep=one_deps,
             distinct_value_threshold=solver_config.get("distinct_value_threshold", default_distinct_value_threshold),

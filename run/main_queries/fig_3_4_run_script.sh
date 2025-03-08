@@ -8,7 +8,7 @@ start_multi_gpu() {
     echo "Number of GPUs to be used: $num_gpus"
 
     base_port=8000
-    model_name="meta-llama/Meta-Llama-3-8B-Instruct"
+    model_name="meta-llama/Llama-3.1-8B-Instruct"
 
     log_dir="logs"
     mkdir -p $log_dir
@@ -44,7 +44,7 @@ start_one_gpu_vllm() {
     echo "GPU ID: $gpu_id, Dataset: $dataset, Algorithm: $algorithm, Query: $query, No Cache: $no_cache"
 
     base_port=8000
-    model_name="meta-llama/Meta-Llama-3-8B-Instruct"
+    model_name="meta-llama/Llama-3.1-8B-Instruct"
     log_dir="logs/fig3-4/server"
     mkdir -p $log_dir
 
@@ -71,9 +71,9 @@ start_one_gpu_vllm() {
     log_file="${log_dir}/${query}_${dataset}_server_${algorithm}_${port}_vllm${cache_suffix}.log"
 
 
-    echo "CUDA_VISIBLE_DEVICES=$gpu_id python -m vllm.entrypoints.openai.api_server --model $model_name --dtype auto --port $port $cache_flag > $log_file 2>&1 &"
+    echo "CUDA_VISIBLE_DEVICES=$gpu_id vllm serve $model_name --max_model_len 10000 --dtype auto --port $port $cache_flag > $log_file 2>&1 &"
 
-    CUDA_VISIBLE_DEVICES=$gpu_id python -m vllm.entrypoints.openai.api_server --model $model_name --dtype auto --port $port $cache_flag > $log_file 2>&1 &
+    CUDA_VISIBLE_DEVICES=$gpu_id vllm serve $model_name --max_model_len 10000 --dtype auto --port $port $cache_flag > $log_file 2>&1 &
 }
 
 
@@ -202,7 +202,7 @@ clear_gpu_processes
 declare -A query_datasets=(
     [filter]="movies products BIRD PDMX beer"
     [projection]="movies products BIRD PDMX beer"
-    [multi_llm]="movies products"
+    [multillm]="movies products"
     [aggregation]="movies products"
     [rag]="fever squad"
 )
@@ -210,7 +210,7 @@ declare -A query_datasets=(
 algorithms=("naive" "quick_greedy_colmerging")
 
 # Query types
-queries=("projection" "filter" "multi-llm" "aggregation" "rag")
+queries=("projection" "filter" "multillm" "aggregation" "rag")
 
 # queries=("filter")
 
