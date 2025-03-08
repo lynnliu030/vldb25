@@ -1,24 +1,24 @@
 # Artifact Evaluation Instructions 
 ## Installation 
 
-Clone and create a new conda environment, installing dependencies 
+Clone and create a new python environment, installing dependencies and ensuring Python version >= 3.10.
 ```
 git clone -b llmsql https://github.com/lynnliu030/artifact-eval.git
 cd artifact-eval
 
-conda create -n artifact_env python=3.10
-conda activate artifact_env
+python -m venv artifact_env
+source artifact_env/bin/activate
 pip install -e .
 sudo apt-get update; sudo apt install default-jdk
 ```
 
-Put the following into `~/.bashrc` as necessary. Please update the following paths depending on your conda installation.
+Put the following into `~/.bashrc` as necessary. Please update the following paths depending on your python installation.
 ```
 export JAVA_HOME=/usr
 export PATH=$JAVA_HOME/bin:$PATH
 
-export PYSPARK_PYTHON=/opt/conda/bin/python3.10
-export PYSPARK_DRIVER_PYTHON=/opt/conda/bin/python3.10
+export PYSPARK_PYTHON=/artifact_env/bin/python3.10
+export PYSPARK_DRIVER_PYTHON=/artifact_env/bin/python3.10
 ```
 
 Login with huggingface, using a token that access to the gated Meta-Llama models. Specifically, access to meta-llama/Meta-Llama-3-8B-Instruct is required.
