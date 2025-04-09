@@ -71,9 +71,9 @@ start_one_gpu_vllm() {
     log_file="${log_dir}/${query}_${dataset}_server_${algorithm}_${port}_vllm${cache_suffix}.log"
 
 
-    echo "CUDA_VISIBLE_DEVICES=$gpu_id vllm serve $model_name --max_model_len 10000 --dtype auto --port $port $cache_flag > $log_file 2>&1 &"
+    echo "CUDA_VISIBLE_DEVICES=$gpu_id vllm serve $model_name --dtype auto --port $port $cache_flag > $log_file 2>&1 &"
 
-    CUDA_VISIBLE_DEVICES=$gpu_id vllm serve $model_name --max_model_len 10000 --dtype auto --port $port $cache_flag > $log_file 2>&1 &
+    CUDA_VISIBLE_DEVICES=$gpu_id vllm serve $model_name --dtype auto --port $port $cache_flag > $log_file 2>&1 &
 }
 
 
